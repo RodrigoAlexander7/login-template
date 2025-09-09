@@ -41,13 +41,4 @@ export class AuthController {
       res.redirect(`${frontendUrl}/auth/error?message=${error.message}`);
     }
   }
-
-  // Here we use the guard that we register on passport (see jwt.strategy.ts)
-  // Req is comming from Passport -> See google.strategy
-  @Get('me')
-  @UseGuards(AuthGuard('jwt'))
-  getProfile(@Request() req) {
-    return req.user
-  }
-
 }
