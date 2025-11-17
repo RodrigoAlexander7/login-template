@@ -7,7 +7,7 @@ export default function GoogleSessionPill() {
     <button
       type="button"
       onClick={() => {
-        window.location.href = 'http://localhost:3000/auth/google';
+        window.location.href = `http://${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
       }}
       className="inline-flex items-center gap-x-3 border-2 px-7 py-2 rounded-full font-medium hover:bg-gray-50 transition"
     >

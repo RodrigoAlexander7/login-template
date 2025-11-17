@@ -8,8 +8,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@nestjs/jwt": "^11.0.1",
     "axios": "^1.12.2",
     "next": "15.5.4",
+    "passport-jwt": "^4.0.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "zustand": "^5.0.8"
@@ -17,6 +19,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/passport-jwt": "^4.0.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "tailwindcss": "^4",

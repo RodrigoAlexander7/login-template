@@ -1,4 +1,4 @@
-import { Controller, Res, Get, Request, UseGuards } from '@nestjs/common';
+import { Controller, Res, Get, Request, UseGuards, Req } from '@nestjs/common';
 import { AuthService } from '@/auth/auth.service';
 
 import { AuthGuard } from '@nestjs/passport';
@@ -9,7 +9,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
 
   // Call auth/google and then redirect to the google strategy (defined on google.Strategy)
   // then the user is redirected to google login -> then is login we call the callback (defined on google.Strategy)
@@ -41,4 +41,13 @@ export class AuthController {
       res.redirect(`${frontendUrl}/auth/error?message=${error.message}`);
     }
   }
+
+  // Here we use the guard that we register on passport (see jwt.strategy.ts)
+  // Req is comming from Passport -> See google.strategy
+  @Get('me')
+  @UseGuards(AuthGuard('jwt'))
+  getProfile(@Request() req) {
+    return req.user
+  }
+
 }

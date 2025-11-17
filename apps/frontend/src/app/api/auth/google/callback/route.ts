@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { request } from 'https';
+import { api } from '@/lib/apis';
 
+// google returns to here with a token
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams; // interface to acces the content after the '?' in the URL
   const token = searchParams.get('token'); // acces to '?token=123' -> '123'
 
   if (!token) {
     return NextResponse.json({ message: 'Token is missing' }, { status: 400 });
+  }
+
+  const isValid = await api.get('/me')
+
+  if (!isValid) {
+    return NextResponse.redirect('/login?error=invalid_token')
   }
 
   // Here we can validate our token with bakend
