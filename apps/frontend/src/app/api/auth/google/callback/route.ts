@@ -12,14 +12,19 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ message: 'Token is missing' }, { status: 400 });
   }
 
-  const isValid = await api.get('/me')
-
-  if (!isValid) {
-    return NextResponse.redirect('/login?error=invalid_token')
+  // Validate token with backend
+  try {
+    await api.get('/auth/me', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.error('Token validation failed:', error);
+    return NextResponse.redirect(new URL('/login?error=invalid_token', req.url));
   }
 
-  // Here we can validate our token with bakend
-  // but idk if the validate method in backend works here lol
+  // Token is valid, set cookie
   try {
     // we use await cause cookies is async on nextjs, in middleware not
     const cookiesStore = await cookies();
