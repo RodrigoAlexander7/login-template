@@ -17,7 +17,7 @@ export default function Login() {
         <header className="text-center">
           <h1 className="text-4xl font-bold text-gray-900">DeepPeru</h1>
           <p className="text-gray-600 mt-2">
-            Inicia sesión para ver lo mejor del Perú
+            Inicia sesión para empezar a optimizar tu produccion
           </p>
         </header>
 

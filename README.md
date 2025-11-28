@@ -1,8 +1,4 @@
-# DeepPeru - Login Template
-
-Template con autenticación usando NestJS (backend) y Next.js (frontend).
-
-## Estructura del Proyecto
+## Project Structure
 
 ```
 apps/
@@ -10,22 +6,22 @@ apps/
 └── frontend/   # Next.js 15 + React 19 + Zustand
 ```
 
-## Requisitos
+## Requirements
 
 - Node.js 20+
 - pnpm 10+
 - PostgreSQL 14+
 
-## Instalación
+## Installation
 
-Cada proyecto es independiente. Instala las dependencias por separado:
+Each project is independent. Install dependencies separately:
 
 ### Backend
 
 ```bash
 cd apps/backend
 pnpm install
-pnpm approve-builds  # Aprobar scripts de Prisma y NestJS
+pnpm approve-builds  # Approve Prisma and NestJS scripts
 ```
 
 ### Frontend
@@ -33,14 +29,14 @@ pnpm approve-builds  # Aprobar scripts de Prisma y NestJS
 ```bash
 cd apps/frontend
 pnpm install
-pnpm approve-builds  # Aprobar scripts de sharp
+pnpm approve-builds  # Approve sharp scripts
 ```
 
-## Configuración
+## Configuration
 
 ### Backend
 
-1. Crear `apps/backend/.env`:
+1. Create `apps/backend/.env`:
 
 ```env
 DATABASE_URL="postgresql://user:password@localhost:5432/deepperu"
@@ -50,7 +46,7 @@ GOOGLE_CLIENT_SECRET="your-google-client-secret"
 GOOGLE_CALLBACK_URL="http://localhost:3000/api/auth/google/callback"
 ```
 
-2. Ejecutar migraciones:
+2. Run migrations:
 
 ```bash
 cd apps/backend
@@ -60,42 +56,42 @@ pnpm prisma generate
 
 ### Frontend
 
-Variables de entorno en `apps/frontend/.env.local`:
+Environment variables in `apps/frontend/.env.local`:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
 
-## Desarrollo
+## Development
 
-### Backend (puerto 3000)
+### Backend (port 3000)
 
 ```bash
 cd apps/backend
 pnpm run start:dev
 ```
 
-### Frontend (puerto 4000)
+### Frontend (port 4000)
 
 ```bash
 cd apps/frontend
 pnpm run dev
 ```
 
-## Comandos Útiles
+## Useful Commands
 
 ### Backend
 
 ```bash
-# Generar cliente Prisma
+# Generate Prisma client
 cd apps/backend
 pnpm prisma generate
 
-# Ver base de datos en interfaz gráfica
+# View database in graphical interface
 pnpm prisma studio
 
-# Crear nueva migración
-pnpm prisma migrate dev --name nombre_migracion
+# Create new migration
+pnpm prisma migrate dev --name migration_name
 
 # Tests
 pnpm run test
@@ -106,13 +102,13 @@ pnpm run test:e2e
 ### Frontend
 
 ```bash
-# Build producción
+# Production build
 cd apps/frontend
 pnpm run build
 pnpm run start
 ```
 
-## Tecnologías
+## Technologies
 
 ### Backend
 - NestJS 11
@@ -128,6 +124,48 @@ pnpm run start
 - Tailwind CSS 4
 - TypeScript 5
 
-## Estructura de Base de Datos
+## Database Structure
 
-Ver modelos en `apps/backend/prisma/schema.prisma`
+See models in `apps/backend/prisma/schema.prisma`
+
+---
+
+## 🚀 Running with Docker
+
+### Backend
+
+Build the image:
+
+```bash
+cd apps/backend
+docker build -t adopta-backend .
+```
+
+Run the container:
+
+```bash
+docker run -d --name adopta-backend -p 3000:3000 adopta-backend
+```
+
+Run Prisma migrations inside the container:
+
+```bash
+docker exec -it adopta-backend pnpx prisma migrate dev
+```
+
+---
+
+### Frontend
+
+Build the image:
+
+```bash
+cd apps/frontend
+docker build -t frontend-app .
+```
+
+Run the container:
+
+```bash
+docker run -d --name frontend-app -p 4000:4000 frontend-app
+```

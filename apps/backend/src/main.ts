@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
+import cookieParser from 'cookie-parser';
 
 const developerDocumentation = (app: INestApplication) => {
   const config = new DocumentBuilder()
@@ -30,6 +31,7 @@ async function bootstrap() {
   if (process.env.NODE_ENV !== 'production') {
     developerDocumentation(app);
   }
+  app.use(cookieParser()); // so now all the routes need to have access to cookies
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap().catch((err) => {

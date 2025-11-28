@@ -21,6 +21,8 @@ Thumbs.db
 /backend/.env.local
 /backend/.env.*.local
 
+generated/
+
 /frontend/.next
 /frontend/out
 /frontend/coverage

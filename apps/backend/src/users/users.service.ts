@@ -3,10 +3,10 @@ import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create({ name, email, image }) {
-    return this.prisma.user.create({
+    return this.prisma.client.user.create({
       data: {
         name,
         email,
@@ -17,7 +17,7 @@ export class UsersService {
   }
 
   async findByEmail(email: string) {
-    return this.prisma.user.findUnique({
+    return this.prisma.client.user.findUnique({
       where: { email: email }, // or in sintax sugar where: { email }
     });
   }

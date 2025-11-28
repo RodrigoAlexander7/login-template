@@ -19,14 +19,20 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     private readonly configService: ConfigService,
   ) {
     super({
-      clientID: configService.get<string>('AUTH_GOOGLE_ID')!,
-      clientSecret: configService.get<string>('AUTH_GOOGLE_SECRET')!,
-      callbackURL: configService.get<string>('GOOGLE_CALLBACK_URL')!,
+      clientID: configService.get<string>('google.clientID')!,
+      clientSecret: configService.get<string>('google.clientSecret')!,
+      callbackURL: configService.get<string>('google.callbackURL')!,
       scope: ['email', 'profile'],
     });
   }
+
+
   // THIS'S SO IMPORTANT
   // that we return here -> is that Passport store on req.user
+
+  // validate() NO valida nada.
+  // Su verdadero trabajo es recibir los datos que Google devuelve, procesarlos y devolver lo que irá en req.user
+
   async validate(accessToken: string, refreshToken: string, profile: Profile) {
     // Profile object contains so much (and unnecesary) information so just incluthe that we want
     const { id, displayName, emails, photos } = profile;
