@@ -1,6 +1,15 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '@/users/users.service';
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { UsersService } from "@/users/users.service";
+import type { User } from "@generated/prisma/client";
+
+interface GoogleProfile {
+  name?: string;
+  email?: string;
+  image?: string;
+  accessToken?: string;
+  refreshToken?: string;
+}
 
 @Injectable()
 export class AuthService {
@@ -10,12 +19,15 @@ export class AuthService {
     private readonly usersService: UsersService,
   ) {}
 
-  //we dont use access token nor refresh tken, we create our own jwt
-  async callbackOauthGoogle({ name, email, image, accessToken, refreshToken }) {
-    console.log('EMAIL RECIBIDO:', email);
-    if (!email) throw new UnauthorizedException('Email not found from Google');
+  // we don't use Google tokens; we create our own JWT
+  async callbackOauthGoogle(
+    profile: GoogleProfile,
+  ): Promise<{ accessToken: string }> {
+    const { email, name, image } = profile;
+    console.log("EMAIL RECIBIDO:", email);
+    if (!email) throw new UnauthorizedException("Email not found from Google");
 
-    let user = await this.usersService.findByEmail(email);
+    let user: User | null = await this.usersService.findByEmail(email);
 
     if (!user) {
       user = await this.usersService.create({
@@ -27,6 +39,6 @@ export class AuthService {
 
     const payload = { sub: user.id, email: user.email };
     const jwt = this.jwtService.sign(payload);
-    return { accessToken: jwt }; // return an JWT object
+    return { accessToken: jwt };
   }
 }

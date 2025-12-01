@@ -1,14 +1,14 @@
-import { Module } from '@nestjs/common';
-import { AppController } from '@/app.controller';
-import { AppService } from '@/app.service';
-import { AuthModule } from '@/auth/auth.module';
-import { UsersModule } from '@/users/users.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
-import { PrismaModule } from './prisma/prisma.module';
+import { Module } from "@nestjs/common";
+import { AppController } from "@/app.controller";
+import { AppService } from "@/app.service";
+import { AuthModule } from "@/auth/auth.module";
+import { UsersModule } from "@/users/users.module";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { JwtModule } from "@nestjs/jwt";
+import { PrismaModule } from "./prisma/prisma.module";
 
-import { validationSchema } from './configs/validations';
-import configuration from './configs/configuration';
+import { validationSchema } from "./configs/validations";
+import configuration from "./configs/configuration";
 
 @Module({
   // Imports are allways modules, not services
@@ -16,11 +16,11 @@ import configuration from './configs/configuration';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema,
-      load: [configuration]
+      load: [configuration],
     }),
     JwtModule.registerAsync({
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('authSecret'),
+        secret: configService.get<string>("authSecret"),
         global: true,
       }),
       inject: [ConfigService],
@@ -33,4 +33,4 @@ import configuration from './configs/configuration';
   // Services by the module it self (no from other module)
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

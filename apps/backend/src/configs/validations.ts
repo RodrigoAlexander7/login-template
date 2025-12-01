@@ -1,4 +1,4 @@
-import * as Joi from 'joi';
+import * as Joi from "joi";
 
 export const validationSchema = Joi.object({
   AUTH_GOOGLE_ID: Joi.string().required(),
@@ -8,7 +8,7 @@ export const validationSchema = Joi.object({
   DATABASE_URL: Joi.string().required(),
   AUTH_SECRET: Joi.string().required(),
   NODE_ENV: Joi.string()
-    .valid('development', 'production', 'test')
-    .default('development'),
+    .valid("development", "production", "test")
+    .default("development"),
   PORT: Joi.number().default(3000),
 });

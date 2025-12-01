@@ -6,7 +6,8 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs'],
+    // Ignored patterns: exclude compiled/generated files and node_modules
+    ignores: ['eslint.config.mjs', 'dist/**', 'dist/generated/**', 'generated/**', 'node_modules/**'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -26,10 +27,17 @@ export default tseslint.config(
   },
   {
     rules: {
+      // Formatting handled by Prettier; keep it enabled but configure severity
+      'prettier/prettier': 'error',
+      quotes: 'off',
+      'quote-props': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+
+      // Relax strict type-aware rules to warnings to reduce friction for students
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
-      'prettier/prettier': ['error', { endOfLine: 'auto' }],
+      '@typescript-eslint/no-unsafe-assignment': 'warn',
+      '@typescript-eslint/no-unsafe-member-access': 'warn',
     },
   },
 );
