@@ -10,6 +10,7 @@
 
 **A robust, flexible, and secure authentication boilerplate using the latest tech stack.**
 
+<img width="1896" height="962" alt="image" src="https://github.com/user-attachments/assets/0823dd96-4c7e-4485-96b3-691579d1f40d" />
 
 
 </div>
