@@ -14,6 +14,27 @@ model User {
   email     String   @unique
   password  String?  // Optional: null for OAuth users, required for local auth
   image     String?
+  groups    Group[]  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Group {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  notes     Note[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  groupId   String
+  group     Group    @relation(fields: [groupId], references: [id])
+  createdAt DateTime @default(now())
+}
+
