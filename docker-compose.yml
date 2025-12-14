@@ -39,3 +39,4 @@ volumes:
 # to run: docker-compose up --build -d
 # after run you need to load the db migrations
 # |-> docker compose exec backend pnpm prisma migrate deploy
+# |-> docker compose exec backend pnpm prisma generate
