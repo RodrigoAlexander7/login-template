@@ -1,0 +1,41 @@
+services:
+  frontend:
+    build: ./apps/frontend
+    container_name: frontend
+    ports:
+      - '4000:4000'
+    env_file:
+      - ./apps/backend/.env
+    depends_on:
+      - backend
+
+  backend:
+    build: ./apps/backend
+    container_name: backend
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./apps/backend/.env
+    depends_on:
+      - postgresql
+  
+  postgresql:
+    image: postgres:16
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+volumes:
+  postgres_data:
+
+# ==================================================== #
+# to run: docker-compose up --build -d
+# after run you need to load the db migrations
+# |-> docker compose exec backend pnpm prisma migrate deploy
